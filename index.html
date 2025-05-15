@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reproductor Personalizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 10px;
+      background: black;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Cargando...</h1>
+  <video id="videoPlayer" controls poster="">
+    Tu navegador no soporta el elemento de video.
+  </video>
+
+  <script>
+    // Obtener parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+
+    function decodeBase64(param) {
+      try {
+        return atob(param);
+      } catch {
+        return null;
+      }
+    }
+
+    const videoBase64 = params.get('video');
+    const posterBase64 = params.get('poster');
+    const titleBase64 = params.get('title');
+
+    const videoUrl = decodeBase64(videoBase64);
+    const posterUrl = decodeBase64(posterBase64);
+    const titleText = decodeBase64(titleBase64);
+
+    if(videoUrl && posterUrl && titleText) {
+      document.getElementById('videoPlayer').src = videoUrl;
+      document.getElementById('videoPlayer').poster = posterUrl;
+      document.getElementById('title').textContent = titleText;
+    } else {
+      document.getElementById('title').textContent = 'Error al cargar el video';
+    }
+  </script>
+
+</body>
+</html>
