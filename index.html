@@ -2,21 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Codificador Base64 de Enlaces</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
+      margin: 0;
       padding: 20px;
-      background: #f3f3f3;
-      border-radius: 20px;
-      box-shadow: 0 0 10px #ccc;
+      background: #eaeaea;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
     }
     input, textarea, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+      padding: 12px;
+      margin-top: 12px;
       font-size: 1rem;
       border-radius: 10px;
       border: 1px solid #ccc;
@@ -25,30 +38,39 @@
       background-color: #4CAF50;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     button:hover {
       background-color: #45a049;
     }
     .resultado {
       margin-top: 15px;
-      background: #fff;
+      background: #f9f9f9;
       padding: 10px;
       border-radius: 10px;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>🔐 LzPlay! | Codificador Base64 para FCLOUD</h2>
-  
-  <label for="url">🔗 Pega tu enlace de video:</label>
-  <input type="text" id="url" placeholder="https://ejemplo.com/video.mp4 o m3u8">
-  
-  <button onclick="codificar()">🎯 Generar Enlace Final</button>
 
-  <div class="resultado" id="resultado" style="display:none;">
-    <strong>📎 Enlace final para usar:</strong>
-    <textarea id="output" rows="3" readonly></textarea>
-    <button onclick="copiar()">📋 Copiar Enlace</button>
+  <div class="container">
+    <h2>🔐 LzPlay! | Codificador Base64</h2>
+    
+    <label for="url">🔗 Pega tu enlace de video:</label>
+    <input type="text" id="url" placeholder="https://ejemplo.com/video.mp4 o m3u8">
+    
+    <button onclick="codificar()">🎯 Generar Enlace Final</button>
+
+    <div class="resultado" id="resultado" style="display:none;">
+      <strong>📎 Enlace final para usar:</strong>
+      <textarea id="output" rows="3" readonly></textarea>
+      <button onclick="copiar()">📋 Copiar Enlace</button>
+    </div>
   </div>
 
   <script>
@@ -69,9 +91,11 @@
     function copiar() {
       const output = document.getElementById("output");
       output.select();
+      output.setSelectionRange(0, 99999); // Para móviles
       document.execCommand("copy");
       alert("✅ Enlace final copiado al portapapeles.");
     }
   </script>
+
 </body>
 </html>
