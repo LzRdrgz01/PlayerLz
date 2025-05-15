@@ -1,62 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Reproductor Personalizado</title>
+  <meta charset="UTF-8">
+  <title>Codificador Base64 de Enlaces</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      text-align: center;
+      max-width: 600px;
+      margin: 40px auto;
       padding: 20px;
+      background: #f3f3f3;
+      border-radius: 20px;
+      box-shadow: 0 0 10px #ccc;
     }
-    video {
+    input, textarea, button {
       width: 100%;
-      max-width: 800px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 1rem;
       border-radius: 10px;
-      background: black;
+      border: 1px solid #ccc;
     }
-    h1 {
-      margin-bottom: 20px;
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .resultado {
+      margin-top: 15px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
+  <h2>🔐 LzPlay! | Codificador Base64 para FCLOUD</h2>
+  
+  <label for="url">🔗 Pega tu enlace de video:</label>
+  <input type="text" id="url" placeholder="https://ejemplo.com/video.mp4 o m3u8">
+  
+  <button onclick="codificar()">🎯 Generar Enlace Final</button>
 
-  <h1 id="title">Cargando...</h1>
-  <video id="videoPlayer" controls poster="">
-    Tu navegador no soporta el elemento de video.
-  </video>
+  <div class="resultado" id="resultado" style="display:none;">
+    <strong>📎 Enlace final para usar:</strong>
+    <textarea id="output" rows="3" readonly></textarea>
+    <button onclick="copiar()">📋 Copiar Enlace</button>
+  </div>
 
   <script>
-    // Obtener parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
-
-    function decodeBase64(param) {
-      try {
-        return atob(param);
-      } catch {
-        return null;
+    function codificar() {
+      const inputUrl = document.getElementById("url").value.trim();
+      if (inputUrl === "") {
+        alert("Por favor, ingresa un enlace válido.");
+        return;
       }
+
+      const encoded = btoa(inputUrl);
+      const finalUrl = `https://fcloudencrypted.blogspot.com/2024/09/blog-post_28.html?videoUrl=${encoded}`;
+
+      document.getElementById("output").value = finalUrl;
+      document.getElementById("resultado").style.display = "block";
     }
 
-    const videoBase64 = params.get('video');
-    const posterBase64 = params.get('poster');
-    const titleBase64 = params.get('title');
-
-    const videoUrl = decodeBase64(videoBase64);
-    const posterUrl = decodeBase64(posterBase64);
-    const titleText = decodeBase64(titleBase64);
-
-    if(videoUrl && posterUrl && titleText) {
-      document.getElementById('videoPlayer').src = videoUrl;
-      document.getElementById('videoPlayer').poster = posterUrl;
-      document.getElementById('title').textContent = titleText;
-    } else {
-      document.getElementById('title').textContent = 'Error al cargar el video';
+    function copiar() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("✅ Enlace final copiado al portapapeles.");
     }
   </script>
-
 </body>
 </html>
